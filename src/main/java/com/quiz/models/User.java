@@ -8,6 +8,15 @@ import javax.validation.constraints.NotNull;
 @Table(name="userinfo")
 public class User {
 
+    public User() {
+    }
+
+    public User(String login, @NotNull String email, @NotNull String password) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")

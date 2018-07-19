@@ -14,6 +14,10 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.NewCookie;
 import java.util.*;
 
+import static javax.ws.rs.core.Cookie.DEFAULT_VERSION;
+import static javax.ws.rs.core.Cookie.valueOf;
+import static javax.ws.rs.core.NewCookie.DEFAULT_MAX_AGE;
+
 
 public class LoginController {
 
@@ -21,6 +25,11 @@ public class LoginController {
 
     public LoginController() {
         db = new DbManager<>();
+    }
+
+    // for tests
+    public LoginController(DbManager<User> dbManager) {
+        db = dbManager;
     }
 
     public void register(User user) {
@@ -34,11 +43,12 @@ public class LoginController {
 
     public NewCookie login(User user) throws Exception {
         String username = authenticate(user);
+        int maxAge = 3600*24*30;
         Calendar expirationDate = Calendar.getInstance();
         expirationDate.setTimeInMillis(System.currentTimeMillis());
         expirationDate.add(Calendar.MONTH, 1);
         String token = createToken(username, expirationDate.getTime());
-        return new NewCookie("authToken", token);
+        return new NewCookie("authToken", token, null, null, null, maxAge, false);
     }
 
     private String authenticate(User user) throws Exception {
@@ -49,14 +59,13 @@ public class LoginController {
         return users.get(0).getLogin();
     }
 
-    private String createToken(String subject, Date expirationDate) {
-        Date currentTime = new Date(System.currentTimeMillis());
+    private String createToken(String username, Date expirationDate) {
         String token = null;
         try {
             Algorithm algorithm = Algorithm.HMAC256("secret");
             token = JWT.create()
-                    .withSubject(subject)
-                    .withIssuedAt(currentTime)
+                    .withSubject("authQuiz")
+                    .withClaim("username", username)
                     .withExpiresAt(expirationDate)
                     .sign(algorithm);
         } catch (JWTCreationException exception){

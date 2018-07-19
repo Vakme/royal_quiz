@@ -1,4 +1,5 @@
 package com.quiz.endpoints;
+import com.quiz.annotations.RestrictedContentAnnotation;
 import com.quiz.controllers.LoginController;
 import com.quiz.models.User;
 
@@ -14,14 +15,24 @@ import javax.ws.rs.core.Response;
 @Path("/auth")
 public class LoginService {
 
-    private LoginController controller = new LoginController();
+    private LoginController controller;
+
+    public LoginService() {
+        controller = new LoginController();
+    }
+
+    public LoginService(LoginController controller) {
+
+        this.controller = controller;
+    }
 
     @POST
     @Path("/register")
     public Response register(User user) {
         try {
             controller.register(user);
-            return Response.ok().build();}
+            return Response.ok().build();
+        }
         catch (ValidationException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
