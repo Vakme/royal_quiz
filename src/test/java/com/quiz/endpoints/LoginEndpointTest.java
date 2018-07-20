@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class LoginServiceTest {
+class LoginEndpointTest {
 
 
     private static String MAIL = "user@email.com";
@@ -25,7 +25,7 @@ class LoginServiceTest {
     private static String COOKIE_CONTENT = "abc";
 
     private User USER_1;
-    private LoginService loginService;
+    private LoginEndpoint loginEndpoint;
     private LoginController loginController;
     private NewCookie cookie;
 
@@ -38,7 +38,7 @@ class LoginServiceTest {
         USER_1 = new User(LOGIN, MAIL, PASS);
         cookie = new NewCookie(COOKIE_NAME, COOKIE_CONTENT);
         loginController = spy(new LoginController(dbManager));
-        loginService = new LoginService(loginController);
+        loginEndpoint = new LoginEndpoint(loginController);
 
         doNothing().when(loginController).register(USER_1);
         doReturn(cookie).when(loginController).login(USER_1);
@@ -51,24 +51,24 @@ class LoginServiceTest {
 
     @Test
     void when_requestIsProcessed_then_controllerIsUsedOnce() throws Exception {
-        Response response = loginService.register(USER_1);
+        Response response = loginEndpoint.register(USER_1);
         assertNotNull(response);
         verify(loginController, times(1)).register(USER_1);
-        response = loginService.login(USER_1);
+        response = loginEndpoint.login(USER_1);
         assertNotNull(response);
         verify(loginController, times(1)).login(USER_1);
     }
 
     @Test
     void when_registrationDataIsCorrect_then_userShouldGetResponse200() {
-        Response response = loginService.register(USER_1);
+        Response response = loginEndpoint.register(USER_1);
         assertNotNull(response);
         assertEquals(200, response.getStatus());
     }
 
     @Test
     void when_loginDataIsCorrect_then_userShouldGetResponse200AndCookie() {
-        Response response = loginService.login(USER_1);
+        Response response = loginEndpoint.login(USER_1);
         assertNotNull(response);
         assertEquals(200, response.getStatus());
         Cookie cookie = response.getCookies().get(COOKIE_NAME);

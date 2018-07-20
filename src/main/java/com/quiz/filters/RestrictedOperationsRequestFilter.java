@@ -40,6 +40,7 @@ public class RestrictedOperationsRequestFilter implements ContainerRequestFilter
         if(!validate(cookie.getValue())) {
             ctx.abortWith(Response.status(Response.Status.FORBIDDEN)
                     .entity("Cannot access")
+                    .cookie()
                     .build());
         }
     }

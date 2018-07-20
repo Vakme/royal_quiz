@@ -3,12 +3,17 @@ package com.quiz.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name="userinfo")
 public class User {
 
     public User() {
+    }
+
+    public User(int id) {
+        this.id = id;
     }
 
     public User(String login, @NotNull String email, @NotNull String password) {
@@ -33,6 +38,9 @@ public class User {
     @Column(name = "password")
     @NotNull
     private String password;
+
+    @OneToMany(mappedBy="userinfo")
+    private List<Quiz> Quizes;
 
     public int getId() {
         return id;
@@ -66,4 +74,11 @@ public class User {
         this.password = password;
     }
 
+    public List<Quiz> getQuizes() {
+        return Quizes;
+    }
+
+    public void setQuizes(List<Quiz> quizes) {
+        Quizes = quizes;
+    }
 }

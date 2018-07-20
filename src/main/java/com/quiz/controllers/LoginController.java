@@ -8,16 +8,10 @@ import com.quiz.models.User;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.management.Query;
 import javax.validation.ValidationException;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.NewCookie;
 import java.util.*;
-
-import static javax.ws.rs.core.Cookie.DEFAULT_VERSION;
-import static javax.ws.rs.core.Cookie.valueOf;
-import static javax.ws.rs.core.NewCookie.DEFAULT_MAX_AGE;
-
 
 public class LoginController {
 
@@ -49,6 +43,10 @@ public class LoginController {
         expirationDate.add(Calendar.MONTH, 1);
         String token = createToken(username, expirationDate.getTime());
         return new NewCookie("authToken", token, null, null, null, maxAge, false);
+    }
+
+    public NewCookie logout(Cookie cookie) {
+        return new NewCookie(cookie.getName(), null, cookie.getPath(), cookie.getDomain(), null, 0, false);
     }
 
     private String authenticate(User user) throws Exception {

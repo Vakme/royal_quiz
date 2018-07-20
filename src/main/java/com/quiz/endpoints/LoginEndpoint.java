@@ -13,15 +13,15 @@ import javax.ws.rs.core.Response;
 
 @Produces("application/json")
 @Path("/auth")
-public class LoginService {
+public class LoginEndpoint {
 
     private LoginController controller;
 
-    public LoginService() {
+    public LoginEndpoint() {
         controller = new LoginController();
     }
 
-    public LoginService(LoginController controller) {
+    public LoginEndpoint(LoginController controller) {
 
         this.controller = controller;
     }
@@ -55,5 +55,12 @@ public class LoginService {
         catch (Exception e) {
             return Response.serverError().build();
         }
+    }
+
+    @POST
+    @Path("/logout")
+    public Response logout(@CookieParam("authToken") Cookie authToken) {
+        return Response.ok().cookie(controller.logout(authToken)).build();
+
     }
 }
