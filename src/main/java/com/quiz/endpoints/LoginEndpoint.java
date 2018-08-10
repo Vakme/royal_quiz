@@ -1,10 +1,7 @@
 package com.quiz.endpoints;
-import com.quiz.annotations.RestrictedContentAnnotation;
 import com.quiz.controllers.LoginController;
-import com.quiz.models.User;
+import com.quiz.models.db.User;
 
-import javax.json.Json;
-import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Cookie;

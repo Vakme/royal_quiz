@@ -1,5 +1,7 @@
-package com.quiz.models;
+package com.quiz.models.db;
 
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,6 +20,11 @@ public class Result {
     @Column(name = "content")
     @NotNull
     private String content;
+
+    @Column(name = "result_number")
+    @NotNull
+    @JsonProperty("number")
+    private int resultNumber;
 
     @OneToMany(mappedBy="resultId")
     private List<ResultAnswer> answers;
@@ -45,5 +52,13 @@ public class Result {
 
     public void setAnswers(List<ResultAnswer> answers) {
         this.answers = answers;
+    }
+
+    public int getResultNumber() {
+        return resultNumber;
+    }
+
+    public void setResultNumber(int resultNumber) {
+        this.resultNumber = resultNumber;
     }
 }

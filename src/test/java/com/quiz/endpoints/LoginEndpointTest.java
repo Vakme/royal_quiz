@@ -2,7 +2,7 @@ package com.quiz.endpoints;
 
 import com.quiz.controllers.LoginController;
 import com.quiz.db.DbManager;
-import com.quiz.models.User;
+import com.quiz.models.db.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

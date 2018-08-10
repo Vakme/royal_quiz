@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.quiz.db.DbManager;
-import com.quiz.models.User;
+import com.quiz.models.db.User;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;

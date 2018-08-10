@@ -1,16 +1,17 @@
 package com.quiz.endpoints;
 
 import com.quiz.controllers.QuizManagerController;
-import com.quiz.models.Answer;
-import com.quiz.models.Quiz;
-import com.quiz.models.Result;
+import com.quiz.models.db.Question;
+import com.quiz.models.db.Quiz;
+import com.quiz.models.db.Result;
+import com.quiz.models.rest.QuizPackage;
+import com.quiz.models.rest.QuizURI;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.UUID;
 
 @Produces("application/json")
 @Path("/manage")
@@ -29,14 +30,15 @@ public class QuizManagerEndpoint {
 
     @POST
     @Path("/addQuiz")
-    public Response addQuiz(Quiz quiz) {
-        UUID uuid = controller.addQuiz(quiz);
-        return Response.ok().entity(uuid).build();
+    public Response addQuiz(QuizPackage quizPackage) {
+        controller.addResults(quizPackage.getResults());
+        QuizURI quizURI = controller.addQuiz(quizPackage.getQuiz(), quizPackage.getResults());
+        return Response.ok().entity(quizURI).build();
     }
 
     @POST
     @Path("/addAnswers")
-    public Response addAnswers(List<Answer> answers) {
+    public Response addQuestions(List<Question> answers) {
         return Response.ok().build();
     }
 

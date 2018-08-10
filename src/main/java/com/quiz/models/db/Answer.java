@@ -1,5 +1,7 @@
-package com.quiz.models;
+package com.quiz.models.db;
 
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,6 +24,7 @@ public class Answer {
     @JoinColumn(name="question")
     private Question question;
 
+    @JsonProperty("results")
     @OneToMany(mappedBy="answerId")
     private List<ResultAnswer> results;
 

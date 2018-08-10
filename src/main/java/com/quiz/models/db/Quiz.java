@@ -1,4 +1,4 @@
-package com.quiz.models;
+package com.quiz.models.db;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -27,11 +27,11 @@ public class Quiz {
     }
 
     public enum Type {
-        @JsonProperty("quiz")
-        QUIZ ("quiz"),
+        @JsonProperty("category")
+        CATEGORY("category"),
 
-        @JsonProperty("exam")
-        EXAM("exam");
+        @JsonProperty("test")
+        TEST("test");
 
         private final String type;
 
@@ -46,9 +46,9 @@ public class Quiz {
     @NotNull
     private long id;
 
-    @Column(name = "questionnum")
+    @Column(name = "name")
     @NotNull
-    private long questionnum;
+    private String name;
 
     @Column(name = "privacy")
     @NotNull
@@ -70,6 +70,7 @@ public class Quiz {
     @JoinColumn(name= "userinfo")
     private User userinfo;
 
+    @JsonProperty("questions")
     @OneToMany(mappedBy="quiz")
     private List<Question> questions;
 
@@ -80,15 +81,6 @@ public class Quiz {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-
-    public long getQuestionnum() {
-        return questionnum;
-    }
-
-    public void setQuestionnum(long questionnum) {
-        this.questionnum = questionnum;
     }
 
 
@@ -127,6 +119,21 @@ public class Quiz {
         this.rating = rating;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public User getUserinfo() {
+        return userinfo;
+    }
+
+    public void setUserinfo(User userinfo) {
+        this.userinfo = userinfo;
+    }
 
     public User getUser() {
         return userinfo;

@@ -1,5 +1,7 @@
-package com.quiz.models;
+package com.quiz.models.db;
 
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,6 +27,10 @@ public class ResultAnswer {
     @Column(name = "weight")
     @NotNull
     private double weight;
+
+    @JsonProperty("number")
+    @Transient
+    private int resultNumber;
 
     public long getId() {
         return id;
@@ -61,4 +67,12 @@ public class ResultAnswer {
         this.weight = weight;
     }
 
+
+    public int getResultNumber() {
+        return resultNumber;
+    }
+
+    public void setResultNumber(int resultNumber) {
+        this.resultNumber = resultNumber;
+    }
 }

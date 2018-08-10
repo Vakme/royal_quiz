@@ -1,5 +1,7 @@
-package com.quiz.models;
+package com.quiz.models.db;
 
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,10 +17,6 @@ public class Question {
   @NotNull
   private long id;
 
-  @Column(name = "answernum")
-  @NotNull
-  private long answernum;
-
   @Column(name = "content")
   @NotNull
   private String content;
@@ -27,6 +25,7 @@ public class Question {
   @JoinColumn(name="quiz")
   private Quiz quiz;
 
+  @JsonProperty("answers")
   @OneToMany(mappedBy="question")
   private List<Answer> answers;
 
@@ -36,15 +35,6 @@ public class Question {
 
   public void setId(long id) {
     this.id = id;
-  }
-
-
-  public long getAnswernum() {
-    return answernum;
-  }
-
-  public void setAnswernum(long answernum) {
-    this.answernum = answernum;
   }
 
 
