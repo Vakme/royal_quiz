@@ -1,6 +1,8 @@
 package com.quiz.models.db;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -20,22 +22,30 @@ public class Answer {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "num")
+    @NotNull
+    private int num;
+
     @ManyToOne(fetch=FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name="question")
     private Question question;
 
-    @JsonProperty("results")
+    @JsonIgnore
     @OneToMany(mappedBy="answerId")
     private List<ResultAnswer> results;
 
+    @JsonIgnore
     public List<ResultAnswer> getResults() {
         return results;
     }
 
+    @JsonProperty("results")
     public void setResults(List<ResultAnswer> results) {
         this.results = results;
     }
 
+    @JsonIgnore
     public long getId() {
         return id;
     }
@@ -44,6 +54,13 @@ public class Answer {
         this.id = id;
     }
 
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
 
     public String getContent() {
         return content;

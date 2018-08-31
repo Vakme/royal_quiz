@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+
 @Entity
 @Table(name="userinfo")
 public class User {
@@ -14,6 +15,10 @@ public class User {
 
     public User(int id) {
         this.id = id;
+    }
+
+    public User(String login) {
+        this.login = login;
     }
 
     public User(String login, @NotNull String email, @NotNull String password) {

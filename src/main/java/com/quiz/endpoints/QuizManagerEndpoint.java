@@ -7,11 +7,10 @@ import com.quiz.models.db.Result;
 import com.quiz.models.rest.QuizPackage;
 import com.quiz.models.rest.QuizURI;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.UUID;
 
 @Produces("application/json")
 @Path("/manage")
@@ -46,5 +45,26 @@ public class QuizManagerEndpoint {
     @Path("/addResults")
     public Response addResults(List<Result> results) {
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("/get/{uuid}")
+    public Response getQuiz(@PathParam("uuid") UUID uuid) {
+        Quiz quiz = controller.get(uuid);
+        System.out.println(quiz);
+        return Response.ok().entity(quiz).build();
+    }
+
+    @GET
+    @Path("/getPublic")
+    public Response getPublic() {
+        List<Quiz> quizzes = controller.getPublic();
+        return Response.ok().entity(quizzes).build();
+    }
+
+    @GET
+    @Path("/constants")
+    public Response constants() {
+        return Response.ok().entity(Quiz.Type.values()).build();
     }
 }

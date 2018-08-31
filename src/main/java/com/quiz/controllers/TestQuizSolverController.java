@@ -1,13 +1,11 @@
 package com.quiz.controllers;
 
-import com.quiz.models.rest.QuizResult;
+import com.quiz.models.rest.QuizResultMap;
 import com.quiz.models.rest.SolvedQuiz;
-
-import java.util.List;
 
 public class TestQuizSolverController implements QuizSolverController {
     @Override
-    public List<QuizResult> solve(SolvedQuiz quiz) {
+    public QuizResultMap solve(SolvedQuiz quiz) {
         return null;
     }
 }

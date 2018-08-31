@@ -1,5 +1,7 @@
 package com.quiz.models.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -71,10 +73,23 @@ public class Quiz {
     private User userinfo;
 
     @JsonProperty("questions")
-    @OneToMany(mappedBy="quiz")
+    @JsonManagedReference
+    @OneToMany(mappedBy="quiz", fetch = FetchType.EAGER)
     private List<Question> questions;
 
+    public Quiz() {
+    }
 
+    public Quiz(@NotNull String name, @NotNull Privacy privacy, @NotNull Type type, UUID uuid, double rating, User userinfo) {
+        this.name = name;
+        this.privacy = privacy;
+        this.type = type;
+        this.uuid = uuid;
+        this.rating = rating;
+        this.userinfo = userinfo;
+    }
+
+    @JsonIgnore
     public long getId() {
         return id;
     }
@@ -133,14 +148,6 @@ public class Quiz {
 
     public void setUserinfo(User userinfo) {
         this.userinfo = userinfo;
-    }
-
-    public User getUser() {
-        return userinfo;
-    }
-
-    public void setUser(User user) {
-        this.userinfo = user;
     }
 
     public List<Question> getQuestions() {

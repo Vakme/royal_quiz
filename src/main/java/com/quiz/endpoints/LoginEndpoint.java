@@ -1,4 +1,5 @@
 package com.quiz.endpoints;
+import com.quiz.annotations.RestrictedContentAnnotation;
 import com.quiz.controllers.LoginController;
 import com.quiz.models.db.User;
 
@@ -56,6 +57,7 @@ public class LoginEndpoint {
 
     @POST
     @Path("/logout")
+    @RestrictedContentAnnotation
     public Response logout(@CookieParam("authToken") Cookie authToken) {
         return Response.ok().cookie(controller.logout(authToken)).build();
 

@@ -28,7 +28,6 @@ public class DbManager<T> {
         em.getTransaction().begin();
         em.persist(object);
         em.getTransaction().commit();
-        em.close();
     }
 
     public void insertMany(List<T> list) throws IllegalStateException, RollbackException {
@@ -54,6 +53,13 @@ public class DbManager<T> {
 
         TypedQuery<T> query = em.createQuery(cbQuery);
         query.setParameter(pClass, paramValue);
-        return query.getResultList();
+        System.out.println(cbQuery);
+        System.out.println(query);
+        List<T> results = query.getResultList();
+        return results;
+    }
+
+    public void close() {
+        em.close();
     }
 }
