@@ -2,6 +2,10 @@ package com.quiz.models.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Single result of the quiz
+ * Contains result content and the final weight this result scored
+ */
 public class QuizResult {
 
     @JsonProperty("category")

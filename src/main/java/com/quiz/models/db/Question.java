@@ -10,29 +10,47 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * Represents question content
+ */
 @Entity
 @Table(name = "question")
 public class Question {
 
+  /**
+   * Unique id
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id")
   @NotNull
   private long id;
 
+  /**
+   * Question itself
+   */
   @Column(name = "content")
   @NotNull
   private String content;
 
+  /**
+   * Ordering number (unique per quiz)
+   */
   @Column(name = "num")
   @NotNull
   private int num;
 
+  /**
+   * Quiz this question belongs to
+   */
   @ManyToOne(fetch=FetchType.LAZY)
   @JsonBackReference
   @JoinColumn(name="quiz")
   private Quiz quiz;
 
+  /**
+   * List of possible answers to this question
+   */
   @JsonProperty("answers")
   @JsonManagedReference
   @OneToMany(mappedBy="question", fetch = FetchType.EAGER)

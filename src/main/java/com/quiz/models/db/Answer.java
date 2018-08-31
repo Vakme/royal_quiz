@@ -9,28 +9,46 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * Represents answer content
+ */
 @Entity
 @Table(name = "answer")
 public class Answer {
 
+    /**
+     * Unique id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     @NotNull
     private long id;
 
+    /**
+     * Answer itself
+     */
     @Column(name = "content")
     private String content;
 
+    /**
+     * Ordering number (unique per question)
+     */
     @Column(name = "num")
     @NotNull
     private int num;
 
+    /**
+     * Question this answer belongs to
+     */
     @ManyToOne(fetch=FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name="question")
     private Question question;
 
+    /**
+     * List of weights for each result
+     */
     @JsonIgnore
     @OneToMany(mappedBy="answerId")
     private List<ResultAnswer> results;

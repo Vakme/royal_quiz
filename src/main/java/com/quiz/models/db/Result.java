@@ -8,26 +8,41 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * Represents possible final result of the quiz
+ */
 @Entity
 @Table(name = "result")
 public class Result {
 
+    /**
+     * Unique id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     @NotNull
     private long id;
 
+    /**
+     * Result itself
+     */
     @Column(name = "content")
     @NotNull
     @JsonProperty("content")
     private String content;
 
+    /**
+     * Ordering number (one per quiz)
+     */
     @Column(name = "result_number")
     @NotNull
     @JsonProperty("number")
     private int resultNumber;
 
+    /**
+     * Used to map result to each answer that uses it
+     */
     @OneToMany(mappedBy="resultId")
     private List<ResultAnswer> answers;
 

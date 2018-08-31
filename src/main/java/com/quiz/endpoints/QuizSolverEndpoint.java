@@ -14,6 +14,9 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Endpoint used for solving a quiz
+ */
 @Produces("application/json")
 @Path("/solve")
 public class QuizSolverEndpoint {
@@ -27,6 +30,10 @@ public class QuizSolverEndpoint {
         this.controller = controller;
     }
 
+    /**
+     * Service used to pass answers to a solver based on quiz type
+     * @param quiz map of user's answers
+     */
     @POST
     @Path("/")
     public Response solve(SolvedQuiz quiz) {

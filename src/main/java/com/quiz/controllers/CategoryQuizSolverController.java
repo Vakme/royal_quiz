@@ -13,6 +13,11 @@ import org.decimal4j.util.DoubleRounder;
 import java.util.*;
 import java.util.stream.Collectors;
 
+//TODO: Refactor
+
+/**
+ * Solver for quizzes with type CATEGORY
+ */
 public class CategoryQuizSolverController implements QuizSolverController {
     @Override
     public QuizResultMap solve(SolvedQuiz solvedQuiz) {
@@ -39,11 +44,23 @@ public class CategoryQuizSolverController implements QuizSolverController {
         return new QuizResultMap(results);
     }
 
+    /**
+     * Calculate final weight and round to 2 decimal points
+     * @param weight Sum of weights
+     * @param solution Solution map
+     * @return final score
+     */
     private double mapWeight(double weight, Map<Integer, Integer> solution) {
         double length = solution.keySet().size();
         return DoubleRounder.round(weight/length, 2);
     }
 
+    /**
+     * Filter only the answers that user sumbitted
+     * @param solution solution map
+     * @param question question to be filtered
+     * @return
+     */
     private Answer filterAnswer(Map<Integer, Integer> solution, Question question) {
         solution.forEach((q, a) -> System.out.println(a + " qs:" + q));
         question.getAnswers()

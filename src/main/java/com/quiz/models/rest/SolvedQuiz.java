@@ -5,6 +5,9 @@ import com.quiz.models.db.Quiz;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Object received via API when user submits answers to quiz
+ */
 public class SolvedQuiz {
     private UUID uuid;
     private Map<Integer, Integer> solution;

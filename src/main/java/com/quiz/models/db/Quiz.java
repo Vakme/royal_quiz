@@ -9,15 +9,27 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
-
+/**
+ * Represents basic info about quiz
+ */
 @Entity
 @Table(name = "quiz")
 public class Quiz {
 
+    /**
+     * Used to distinguish quiz visibility
+     */
     public enum Privacy {
+
+        /**
+         * Quiz is accessible only via link
+         */
         @JsonProperty("private")
         PRIVATE ("private"),
 
+        /**
+         * Quiz is visible in public catalogue
+         */
         @JsonProperty("public")
         PUBLIC("public");
 
@@ -28,10 +40,23 @@ public class Quiz {
         }
     }
 
+    /**
+     * Used to distinguish the method of solving
+     */
     public enum Type {
+
+        /**
+         * Each answer has a weight from 0 to 1
+         * Results are shown as a list of how many % user scored per each category
+         */
         @JsonProperty("category")
         CATEGORY("category"),
 
+        /**
+         * Each answer has a weight either 0 or 1
+         * Results are shown as a list of how many % good and bad answers user submitted
+         * Full solution is yet to be implemented
+         */
         @JsonProperty("test")
         TEST("test");
 
@@ -42,36 +67,61 @@ public class Quiz {
         }
     }
 
+    /**
+     * Unique generated id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     @NotNull
     private long id;
 
+    /**
+     * Name (title) of the quiz
+     */
     @Column(name = "name")
     @NotNull
     private String name;
 
+    /**
+     * Privacy
+     */
     @Column(name = "privacy")
     @NotNull
     @Enumerated(EnumType.STRING)
     private Privacy privacy;
 
+    /**
+     * Type
+     */
     @Column(name = "type")
     @NotNull
     @Enumerated(EnumType.STRING)
     private Type type;
 
+    /**
+     * Unique ID generated when quiz is added
+     * Used to represent quiz by API and to share it via link
+     */
     @Column(name = "uuid")
     private UUID uuid;
 
+    /**
+     * Quiz rating
+     */
     @Column(name = "rating")
     private double rating;
 
+    /**
+     * Creator of quiz
+     */
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name= "userinfo")
     private User userinfo;
 
+    /**
+     * List of questions
+     */
     @JsonProperty("questions")
     @JsonManagedReference
     @OneToMany(mappedBy="quiz", fetch = FetchType.EAGER)

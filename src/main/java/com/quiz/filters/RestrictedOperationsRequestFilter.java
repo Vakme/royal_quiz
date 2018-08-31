@@ -15,10 +15,18 @@ import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * Filter used to check if user has access to requested resource
+ */
 @Provider
 @RestrictedContentAnnotation
 public class RestrictedOperationsRequestFilter implements ContainerRequestFilter {
 
+    /**
+     * JWT validation
+     * @return true if auth token is valid
+     * @return false if token is invalid (exception occurred)
+     */
     private boolean validate(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256("secret");

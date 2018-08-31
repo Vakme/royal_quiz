@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+/**
+ * List of quiz results
+ * Sent via API after final score for each result is calculated
+ */
 public class QuizResultMap {
 
     @JsonProperty("results")

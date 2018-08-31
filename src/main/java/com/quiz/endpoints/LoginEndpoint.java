@@ -9,6 +9,9 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
+/**
+ * Endpoint used for auth operations
+ */
 @Produces("application/json")
 @Path("/auth")
 public class LoginEndpoint {
@@ -24,6 +27,11 @@ public class LoginEndpoint {
         this.controller = controller;
     }
 
+    /**
+     * Registration service
+     * @param user User data
+     * @return status code
+     */
     @POST
     @Path("/register")
     public Response register(User user) {
@@ -40,6 +48,11 @@ public class LoginEndpoint {
     }
 
 
+    /**
+     * Login service
+     * @param user User data
+     * @return response with auth cookie or status code
+     */
     @POST
     @Path("/login")
     public Response login(User user) {
@@ -55,6 +68,10 @@ public class LoginEndpoint {
         }
     }
 
+    /**
+     * Logout service
+     * @param authToken cookie with auth token
+     */
     @POST
     @Path("/logout")
     @RestrictedContentAnnotation

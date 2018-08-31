@@ -5,7 +5,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-
+/**
+ * Represents basic user info
+ */
 @Entity
 @Table(name="userinfo")
 public class User {
@@ -17,10 +19,16 @@ public class User {
         this.id = id;
     }
 
+    /**
+     * Constructor used to send user's info in a response (i.e. when solving a quiz)
+     */
     public User(String login) {
         this.login = login;
     }
 
+    /**
+     * Basic constructor
+     */
     public User(String login, @NotNull String email, @NotNull String password) {
         this.login = login;
         this.email = email;
@@ -33,17 +41,29 @@ public class User {
     @NotNull
     private int id;
 
+    /**
+     * User login. By default is created as email slug
+     */
     @Column(name = "login")
     private String login;
 
+    /**
+     * User email, unique per db
+     */
     @Column(name = "email")
     @NotNull
     private String email;
 
+    /**
+     * User hashed password
+     */
     @Column(name = "password")
     @NotNull
     private String password;
 
+    /**
+     * List of quizzes this user created
+     */
     @OneToMany(mappedBy="userinfo")
     private List<Quiz> Quizes;
 

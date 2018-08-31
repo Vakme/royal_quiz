@@ -6,6 +6,9 @@ import com.quiz.models.db.Result;
 
 import java.util.List;
 
+/**
+ * Object received via API to when user submits new quiz
+ */
 public class QuizPackage {
 
     private Quiz quiz;

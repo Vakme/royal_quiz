@@ -2,6 +2,10 @@ package com.quiz.models.rest;
 
 import java.util.UUID;
 
+/**
+ * Object sent via API after new quiz is inserted to database.
+ * Contains quiz info necessary to share it.
+ */
 public class QuizURI {
 
     private UUID uuid;

@@ -13,6 +13,9 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.NewCookie;
 import java.util.*;
 
+/**
+ * Controller used for auth operations
+ */
 public class LoginController {
 
     private DbManager<User> db;
@@ -26,6 +29,11 @@ public class LoginController {
         db = dbManager;
     }
 
+    /**
+     * Used to register user
+     * @param user User data
+     * @throws ValidationException when user cannot be inserted to db
+     */
     public void register(User user) {
         if(validateEmailAddress(user.getEmail())) {
             db.insertSingle(user);
@@ -35,6 +43,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Used to log user in
+     * @param user User data
+     * @throws Exception when user cannot be logged in
+     * @return Cookie with JWT
+     */
     public NewCookie login(User user) throws Exception {
         String username = authenticate(user);
         int maxAge = 3600*24*30;
@@ -45,11 +59,22 @@ public class LoginController {
         return new NewCookie("authToken", token, null, null, null, maxAge, false);
     }
 
+    /**
+     * Used to log user out
+     * @param cookie Cookie with auth token
+     * @return empty cookie
+     */
     public NewCookie logout(Cookie cookie) {
         return new NewCookie(cookie.getName(), null, cookie.getPath(), cookie.getDomain(), null, 0, false);
     }
 
-    private String authenticate(User user) throws Exception {
+    /**
+     * Used to authenticate user based on data from DB
+     * @param user user data
+     * @return login of authenticated user
+     * @throws ValidationException if user cannot be authenticated
+     */
+    private String authenticate(User user) {
         List<User> users = db.findEqualByParam(User.class, new AbstractMap.SimpleEntry<>("email", String.class), user.getEmail());
         if(!users.get(0).getPassword().equals(user.getPassword())) {
             throw new ValidationException();
@@ -57,6 +82,12 @@ public class LoginController {
         return users.get(0).getLogin();
     }
 
+    /**
+     * Used to create JWT for authenticated user
+     * @param username user login to be encrypted into JWT
+     * @param expirationDate Date of token expiration
+     * @throws JWTCreationException if JWT couldn't be created
+     */
     private String createToken(String username, Date expirationDate) {
         String token = null;
         try {
@@ -72,6 +103,11 @@ public class LoginController {
         return token;
     }
 
+    /**
+     * Used to check if user email is valid
+     * @param email email to validate
+     * @return true if email is valid, false if not
+     */
     private boolean validateEmailAddress(String email) {
         boolean result = true;
         try {
